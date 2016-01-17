@@ -1,0 +1,32 @@
+extends layout
+
+block scripts
+   script(src="app/controllers/emissionCtrl.js")
+   script(src="app/services/emissionService.js")
+
+block content
+   div(ng-app="emisiuniApp", ng-controller="emissionCtrl as em")
+      h2 Emisiuni
+      form(method="POST", action="/emisiuni/add" class="form-inline")
+         input(type="text", name="name", placeholder="Titlul emisiunii" class="form-control")
+         input(type="text", name="type", placeholder="Categorie" class="form-control")
+         input(type="text", name="time_1", placeholder="Durata" class="form-control")
+         input(type="text", name="first_show_date", placeholder="Data primei aparitii pe post" class="form-control")
+         input(type="text", name="total_duration", placeholder="Durata totala" class="form-control", disabled=true)
+         input(type="button", name="Add", class="btn btn-success", value="Add")
+
+      table(class="table table-striped table-bordered")
+         thead
+            tr
+               td Program
+               td Genul
+               td Produs
+               td Limba
+               td Foramt
+         tbody
+            tr(ng-repeat="emisiune in em.emisiuni")
+               td {{ emisiune.name }}
+               td {{ emisiune.type }}
+               td {{}}
+               td RO
+               td {{}}

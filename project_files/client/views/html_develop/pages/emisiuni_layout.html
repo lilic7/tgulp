@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8">
+    <title>MdSport Stuff</title>
+    <base href="/">
+    <link rel="stylesheet" href="assets/libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
+    <script src="assets/libs/angular/angular.min.js"></script>
+    <script src="assets/libs/angular-route/angular-route.min.js"></script>
+    <script src="app/app.js"></script>
+  </head>
+  <body ng-app="app" ng-controller="appCtrl as main">
+    <!-- Top menu is here-->
+    <header>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand"><i class="fa fa-home"></i>MD Sport</a>
+            </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="/stiri"><i class="fa fa-files-o"></i>Stiri</a></li>
+                <li><a href="/ecou"><i class="fa fa-microphone"></i>Ecoul Sportului</a></li>
+                <li><a href="/program"><i class="fa fa-list-alt"></i>Program</a></li>
+              </ul>
+              <div class="nav navbar-nav navbar-right">
+                <div class="btn-group"><a href="/login" class="btn btn-default navbar-btn"><i class="fa fa-sign-in"></i>Login</a><a href="/register" class="btn btn-default navbar-btn"><i class="fa fa-user"></i>Register</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+    </div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+doctype html
+html
+   head(lang='en')
+      meta(charset='UTF-8')
+      title="MdSport Stuff"
+      base(href="/")
+      link(rel='stylesheet', href="assets/libs/bootstrap/dist/css/bootstrap.min.css")
+      link(rel='stylesheet', href="assets/libs/font-awesome/css/font-awesome.min.css")
+      link(rel='stylesheet', href="assets/css/style.min.css")
+
+      script(src="assets/libs/angular/angular.min.js")
+      script(src="assets/libs/angular-route/angular-route.min.js")
+
+      block scripts
+   body
+
+      // Top menu is here
+      include ../blocks/top_menu
+
+      div(class="container")
+         block content
