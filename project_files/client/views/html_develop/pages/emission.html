@@ -47,7 +47,7 @@
           <input type="text" name="total_duration" placeholder="Durata totala" disabled class="form-control">
           <input type="button" name="Add" value="Add" class="btn btn-success">
         </form>
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered table-center">
           <thead>
             <tr>
               <td>Program</td>
@@ -59,7 +59,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="emisiune in em.emisiuni">
-              <td>{{ emisiune.name }}</td>
+              <td>{{ emisiune.type.charAt(0).toUpperCase()+emisiune.type.substr(1) + ": " + emisiune.name }}</td>
               <td>{{ emisiune.type }}</td>
               <td>{{}}</td>
               <td>RO</td>

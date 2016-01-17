@@ -15,7 +15,7 @@ block content
          input(type="text", name="total_duration", placeholder="Durata totala" class="form-control", disabled=true)
          input(type="button", name="Add", class="btn btn-success", value="Add")
 
-      table(class="table table-striped table-bordered")
+      table(class="table table-striped table-bordered table-center")
          thead
             tr
                td Program
@@ -25,7 +25,7 @@ block content
                td Foramt
          tbody
             tr(ng-repeat="emisiune in em.emisiuni")
-               td {{ emisiune.name }}
+               td {{ emisiune.type.charAt(0).toUpperCase()+emisiune.type.substr(1) + ": " + emisiune.name }}
                td {{ emisiune.type }}
                td {{}}
                td RO
