@@ -1,4 +1,4 @@
-var app, bodyParser, dbConfig, ecouRouter, emisiuniRouter, express, mongoose, morgan, path, programRouter, stiriRouter;
+var app, bodyParser, dbConfig, ecouRouter, emisiuniRouter, express, mongoose, morgan, path, programRouter, settingsRouter, stiriRouter;
 
 express = require('express');
 
@@ -21,6 +21,8 @@ ecouRouter = require('./app/routes/ecouRouter')(app, express);
 programRouter = require('./app/routes/programRouter')(app, express);
 
 emisiuniRouter = require('./app/routes/emisiuniRouter')(app, express);
+
+settingsRouter = require('./app/routes/settingsRouter')(app, express);
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -46,7 +48,7 @@ app.set('view engine', 'jade');
 app.set('views', path.join(__dirname + '/public/app/views'));
 
 app.get('/', function(req, res) {
-  res.render("pages/test");
+  res.render("pages/layout");
 });
 
 app.use('/stiri', stiriRouter);
@@ -56,6 +58,8 @@ app.use('/ecou', ecouRouter);
 app.use('/program', programRouter);
 
 app.use('/emisiuni', emisiuniRouter);
+
+app.use('/settings', settingsRouter);
 
 app.listen(5000);
 

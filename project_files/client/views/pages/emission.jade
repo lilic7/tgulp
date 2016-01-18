@@ -1,11 +1,7 @@
 extends layout
 
-block scripts
-   script(src="app/controllers/emissionCtrl.js")
-   script(src="app/services/emissionService.js")
-
 block content
-   div(ng-app="emisiuniApp", ng-controller="emissionCtrl as em")
+   div(ng-app="emmApp", ng-controller="emmCtrl as em")
       h2 Emisiuni
       form(method="POST", action="/emisiuni/add" class="form-inline")
          input(type="text", name="name", placeholder="Titlul emisiunii" class="form-control")

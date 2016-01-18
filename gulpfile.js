@@ -9,7 +9,10 @@ var gulp        = require('gulp'),
     watch       = require('gulp-watch'),
     jade        = require('gulp-jade'),
     htmlHint    = require('gulp-htmlhint'),
-    htmlStylish = require('htmlhint-stylish'),
+    jshint      = require('gulp-jshint'),
+    concat      = require('gulp-concat'),
+    uglify      = require('gulp-uglify'),
+    ngAnnotate  = require('gulp-ng-annotate'),
     browserSync = require('browser-sync');
 
 
@@ -44,6 +47,10 @@ var paths = {
             source: [client_dir+'services/*.coffee', client_dir+'services/**/*.coffee'],
             dest: 'public/app/services'
         },
+        routes: {
+            source: [client_dir + 'routes/*.coffee', client_dir + 'routes/**/*.coffee'],
+            dest: 'public/app/routes'
+        },
         scss: {
             source: [client_dir+'scss/*.scss', client_dir+'scss/**/*.scss'],
             dest: 'public/assets/css'
@@ -56,13 +63,21 @@ var paths = {
             },
             blocks: {
                 source: [client_dir+'views/blocks/*.jade', client_dir+'views/blocks/**/*.jade'],
-                dest: 'public/app/views/blocks/',
+                dest: 'public/app/views/blocks',
                 dev: client_dir+'views/html_develop/blocks'
+            },
+            ng: {
+                source: [client_dir+'views/ng/*.jade', client_dir+'views/ng/**/*.jade'],
+                dest: 'public/app/views/parts'
             }
         },
         angular_files: {
             source: client_dir+'*.coffee',
             dest: 'public/app'
+        },
+        angular_to_app: {
+            source: ['public/app/controllers/*.js', 'public/app/controllers/**/*.js', 'public/app/services/*.js', 'public/app/services/**/*.js', 'public/app/routes/*.js', 'public/app/routes/**/*.js'],
+            dest: 'public/dist'
         }
     }
 };
@@ -70,20 +85,40 @@ var paths = {
 gulp.task('ng-service', function(){
     return gulp.src(paths.client.services.source)
         .pipe(coffee({bare: true}).on('error', gutil.log))
-        .pipe(gulp.dest(paths.client.services.dest))
+        .pipe(gulp.dest(paths.client.services.dest));
 });
 
 gulp.task('ng-controllers', function(){
     return gulp.src(paths.client.controllers.source)
         .pipe(coffee({bare: true}).on('error', gutil.log))
-        .pipe(gulp.dest(paths.client.controllers.dest))
+        .pipe(gulp.dest(paths.client.controllers.dest));
+});
+
+gulp.task('ng-routes', function(){
+    return gulp.src(paths.client.routes.source)
+        .pipe(coffee({bare: true}).on('error', gutil.log))
+        .pipe(gulp.dest(paths.client.routes.dest));
+});
+
+gulp.task('ng-views', function () {
+    return gulp.src(paths.client.views.ng.source)
+        .pipe(jade({pretty: true}))
+        .pipe(gulp.dest(paths.client.views.ng.dest))
 });
 
 gulp.task('angularApp', function () {
     return gulp.src(paths.client.angular_files.source)
         .pipe(coffee({bare: true}).on('error', gutil.log))
         .pipe(gulp.dest(paths.client.angular_files.dest));
-})
+});
+
+gulp.task('angular-to-app', function () {
+    return gulp.src(paths.client.angular_to_app.source)
+        .pipe(ngAnnotate())
+        .pipe(concat('app.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(paths.client.angular_to_app.dest))
+});
 
 gulp.task('server', function(){
     return gulp.src(paths.server.server_file.source)
@@ -123,10 +158,10 @@ gulp.task('jade-page', function(){
         .pipe(jade({
             pretty: true
         }))
+        .pipe(gulp.dest(paths.client.views.pages.dev))
         .pipe(htmlHint())
         .pipe(htmlHint.reporter('htmlhint-stylish'))
-        .pipe(htmlHint.failReporter({supress: false}))
-        .pipe(gulp.dest(paths.client.views.pages.dev));
+        .pipe(htmlHint.failReporter({supress: false}));
 });
 
 gulp.task('jade-block', function(){
@@ -151,7 +186,7 @@ gulp.task('watch', function(){
     watch(paths.server.routes.source, batch(function (event, done) {
         gulp.start('routes', done);
     }));
-    watch(paths.client.scss.source, batch(function (events, done) {
+    watch(paths.client.scss.source, batch(function (event, done) {
         gulp.start('sass', done);
     }));
     watch(paths.client.views.pages.source, batch(function (event, done) {
@@ -169,6 +204,15 @@ gulp.task('watch', function(){
     watch(paths.client.controllers.source, batch(function (event, done) {
         gulp.start('ng-controllers', done);
     }));
+    watch(paths.client.routes.source, batch(function (event, done) {
+        gulp.start('ng-routes', done);
+    }));
+    watch(paths.client.angular_to_app.source, batch(function (event, done) {
+        gulp.start('angular-to-app', done);
+    }));
+    watch(paths.client.views.ng.source, batch(function (event, done) {
+        gulp.start('ng-views', done);
+    }))
 });
 
 gulp.task('nodemon', function(cb){
@@ -189,20 +233,15 @@ gulp.task('nodemon', function(cb){
 
 gulp.task('default', ['browserSync']);
 
-
-var brsSyncStream = function() {
-    return browserSync.reload({
-        stream: true
-    });
-}
-
 gulp.task('browserSync', ['nodemon'], function(){
     browserSync.init(null, {
         proxy: 'http://localhost:5000',
         files: [
             'public/app/*.js',
             'public/app/views/**/*.jade',
+            'public/app/views/parts/**/*.html',
             'public/assets/css/*.css',
+            'public/dist',
             'server.js',
             'app/**/*.js'
             ],

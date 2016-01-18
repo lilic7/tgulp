@@ -1,5 +1,5 @@
-angular.module 'emisiuniApp', ['emissionService']
-  .controller 'emissionCtrl', (Emisiuni) ->
+angular.module 'emmApp', ['emmService']
+  .controller 'emmCtrl', (Emisiuni) ->
     vm = this
     Emisiuni.all()
       .success (data) ->

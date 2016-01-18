@@ -37,6 +37,23 @@
       </nav>
     </header>
     <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <div ng-view></div>
+        </div>
+        <div class="col-sm-3 settings-menu">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Emisiuni</h3>
+            </div><a href="/settings/emisiuni/types" class="list-group-item">Gen emisiuni</a>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Stiri</h3>
+            </div><a href="#" class="list-group-item">Categorii</a>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
