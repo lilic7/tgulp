@@ -1,8 +1,15 @@
 extends layout
 
 block content
-    div(class="row")
+    div(class="row" ng-app="settingsApp" ng-controller="emtypesCtrl as emtypes")
         div(class="col-sm-8")
+            table(class="table table-striped table-bordered table-center table-settings")
+                thead
+                    tr(class='success')
+                        td {{ emtypes.tableTitle }}
+                tbody
+                    tr(ng-repeat="type in emtypes.types")
+                        td {{ type.name }}
             div(ng-view)
         div(class="col-sm-3 settings-menu")
             include ../blocks/settings-menu

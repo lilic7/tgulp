@@ -1,7 +1,8 @@
 angular.module('settingsRoutes', ['ngRoute']).config(function($routeProvider, $locationProvider) {
-  return $routeProvider.when('/emisiuni/types', {
-    templateUrl: '',
-    controller: 'settingsCtrl',
-    controllerAs: 'settings'
+  $routeProvider.when('/emisiuni/types', {
+    templateUrl: 'parts/em-types.html',
+    controller: 'emtypesCtrl',
+    controllerAs: 'emtypes'
   });
+  return $locationProvider.html5Mode(true);
 });

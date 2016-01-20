@@ -16,10 +16,10 @@ module.exports = function(app, express) {
       return res.json(types);
     });
   });
-  SettingsRouter.post("/emisiuni/types/add", function(req, res) {
+  SettingsRouter.post("/emisiuni/types", function(req, res) {
     var type;
     type = new EmissionType();
-    type._id = req.body.tname;
+    type.name = req.body.tname;
     return type.save(function(err) {
       if (err) {
         res.send(err);

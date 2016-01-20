@@ -2,7 +2,9 @@ angular.module 'settingsRoutes', ['ngRoute']
   .config ($routeProvider, $locationProvider) ->
     $routeProvider
       .when '/emisiuni/types', {
-          templateUrl: '',
-          controller: 'settingsCtrl',
-          controllerAs: 'settings'
+          templateUrl: 'parts/em-types.html',
+          controller: 'emtypesCtrl',
+          controllerAs: 'emtypes'
         }
+
+    $locationProvider.html5Mode true

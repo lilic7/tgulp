@@ -1,7 +1,8 @@
-angular.module('settingsApp', ['settingsService']).controller('settingsCtrl', function(Settings) {
+angular.module('settingsApp', ['settingsService', 'settingRoutes']).controller('emtypesCtrl', function(Settings) {
   var vm;
   vm = this;
   Settings.allEmTypes().success(function(data) {
-    vm.emTypes = data;
+    vm.tableTitle = "Genuri emisiuni";
+    vm.types = data;
   });
 });

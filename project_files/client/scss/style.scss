@@ -3,14 +3,20 @@ body {
 }
 
 table{
+  margin: 0 auto;
   thead{
     font-weight: bold;
+    tr:hover{
+      color: #ffffff;
+    }
   }
   tbody{
     color: gray;
   }
-}
-
-.table-center{
-  text-align: center;
+  &.table-center{
+    text-align: center;
+  }
+  &.table-settings{
+    width: 250px;
+  }
 }

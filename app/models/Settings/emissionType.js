@@ -5,7 +5,7 @@ mongoose = require('mongoose');
 Schema = mongoose.Schema;
 
 typeSchema = new Schema({
-  _id: {
+  name: {
     type: String
   }
 });

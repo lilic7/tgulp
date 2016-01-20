@@ -11,9 +11,9 @@ module.exports = (app, express) ->
       res.send err if err
       res.json types
 
-  SettingsRouter.post "/emisiuni/types/add", (req, res) ->
+  SettingsRouter.post "/emisiuni/types", (req, res) ->
     type = new EmissionType()
-    type._id = req.body.tname
+    type.name = req.body.tname
     type.save (err) ->
       res.send err if err
       res.json {"message": "Gen nou creat"}
