@@ -1,6 +1,8 @@
-var Emission;
+var Emission, EmissionType;
 
 Emission = require('../models/emission');
+
+EmissionType = require('../models/Settings/emissionType');
 
 module.exports = function(app, express) {
   var emisiuniRouter, setDuration;
@@ -8,9 +10,17 @@ module.exports = function(app, express) {
   emisiuniRouter.get("/", function(req, res) {
     return res.render("pages/emission");
   });
+  emisiuniRouter.get("/emtypes", function(req, res) {
+    return EmissionType.find(function(err, types) {
+      if (err) {
+        res.json({
+          errorMsg: err
+        });
+      }
+      return res.json(types);
+    });
+  });
   emisiuniRouter.get('/all', function(req, res) {
-    var emission;
-    emission = new Emission();
     return Emission.find(function(err, emissions) {
       if (err) {
         res.send(err);

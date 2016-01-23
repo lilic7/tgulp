@@ -5,4 +5,13 @@ angular.module 'emmApp', ['emmService']
       .success (data) ->
         vm.emisiuni = data.emissions
         return
+
+    Emisiuni.types().success (data) ->
+      vm.emTypes = data
+      return
+
+
+    vm.fullTitle = () ->
+      (vm.emType.toUpperCase() + ": "+ vm.emName) if vm.emType and vm.emName
+
     return

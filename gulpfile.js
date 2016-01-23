@@ -158,10 +158,7 @@ gulp.task('jade-page', function(){
         .pipe(jade({
             pretty: true
         }))
-        .pipe(gulp.dest(paths.client.views.pages.dev))
-        .pipe(htmlHint())
-        .pipe(htmlHint.reporter('htmlhint-stylish'))
-        .pipe(htmlHint.failReporter({supress: false}));
+        .pipe(gulp.dest(paths.client.views.pages.dev));
 });
 
 gulp.task('jade-block', function(){

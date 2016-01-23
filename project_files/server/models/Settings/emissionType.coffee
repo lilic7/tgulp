@@ -5,4 +5,4 @@ typeSchema = new Schema {
     name: {type: String}
   }
 
-module.exports = mongoose.model "emissionType", typeSchema
+module.exports = mongoose.model "EmissionType", typeSchema

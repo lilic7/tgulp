@@ -10,4 +10,4 @@ typeSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("emissionType", typeSchema);
+module.exports = mongoose.model("EmissionType", typeSchema);

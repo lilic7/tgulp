@@ -5,5 +5,7 @@ angular.module 'emmService', []
     emisiuniFactory.all = () ->
       $http.get '/emisiuni/all'
 
-    emisiuniFactory
+    emisiuniFactory.types = () ->
+      $http.get '/emisiuni/emtypes'
 
+    emisiuniFactory

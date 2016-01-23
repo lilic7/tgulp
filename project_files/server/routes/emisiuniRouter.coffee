@@ -1,4 +1,6 @@
 Emission = require '../models/emission'
+EmissionType = require '../models/Settings/emissionType'
+
 
 module.exports = (app, express) ->
   emisiuniRouter = express.Router()
@@ -6,8 +8,12 @@ module.exports = (app, express) ->
   emisiuniRouter.get "/", (req, res) ->
     res.render "pages/emission"
 
+  emisiuniRouter.get "/emtypes", (req, res) ->
+    EmissionType.find (err, types) ->
+      res.json {errorMsg: err} if err
+      res.json types
+
   emisiuniRouter.get '/all', (req, res) ->
-      emission = new Emission()
       Emission.find (err, emissions) ->
         res.send err if err
         res.json {emissions: emissions}
