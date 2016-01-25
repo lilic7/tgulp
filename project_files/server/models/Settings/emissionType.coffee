@@ -2,7 +2,7 @@ mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
 typeSchema = new Schema {
-    name: {type: String}
+    name: {type: String, required: true}
   }
 
 module.exports = mongoose.model "EmissionType", typeSchema

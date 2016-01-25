@@ -4,6 +4,7 @@ angular.module 'emmApp', ['emmService']
     Emisiuni.all()
       .success (data) ->
         vm.emisiuni = data.emissions
+        vm.emCount = data.emissions.length
         return
 
     Emisiuni.types().success (data) ->

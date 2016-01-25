@@ -1,7 +1,7 @@
 extends layout
 
 block content
-   div(ng-app="emmApp", ng-controller="emmCtrl as em")
+   div(ng-controller="emmCtrl as em")
 
       div(class='modal fade', id='emModal', tabindex='-1', role='dialog', aria-labelledby='emModalLabel')
          div(class='modal-dialog', role='document')
@@ -32,7 +32,9 @@ block content
          button(type='button', class='btn btn-success', data-toggle='modal', data-target='#emModal')
             span(class='fa fa-pencil-square-o') Adauga
 
-      table(class="table table-striped table-bordered table-center")
+      h4(ng-hide="em.emCount") Nu exista nici o emisiune
+
+      table(class="table table-striped table-bordered table-center" ng-show="em.emCount")
          thead
             tr
                td Program

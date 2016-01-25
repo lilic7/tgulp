@@ -1,15 +1,7 @@
 extends layout
 block content
    div(class="row")
-      div(class="col-sm-10")
+      div(class="col-sm-9")
          | Emisiuni
-      div(class="col-sm-2")
-         ul(class="nav nav-pills nav-stacked")
-            li(role="presentation")
-               a(href="/program/emisiuni") Emisiuni
-            li(role="presentation")
-               a(href="#") Emisiuni
-            li(role="presentation")
-               a(href="#") Emisiuni
-            li(role="presentation")
-               a(href="#") Emisiuni
+      div(class="col-sm-3 menu-right")
+         include ../blocks/program-menu

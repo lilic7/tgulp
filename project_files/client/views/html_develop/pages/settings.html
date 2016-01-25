@@ -13,7 +13,7 @@
     <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="dist/app.js"></script>
   </head>
-  <body>
+  <body ng-app="emmApp">
     <!-- Top menu is here-->
     <header>
       <nav class="navbar navbar-inverse">
@@ -30,7 +30,7 @@
                 <li><a href="/emisiuni"><i class="fa fa-play-circle-o"></i> Emisiuni</a></li>
                 <li><a href="/settings"><i class="fa fa-cog"></i> Setari</a></li>
               </ul>
-              <div class="nav navbar-nav navbar-right">
+              <div ng-hide="true" class="nav navbar-nav navbar-right">
                 <div class="btn-group"><a href="/login" class="btn btn-default navbar-btn"><i class="fa fa-sign-in"></i> Login</a><a href="/register" class="btn btn-default navbar-btn"><i class="fa fa-user"></i> Register</a></div>
               </div>
             </div>
@@ -39,8 +39,8 @@
       </nav>
     </header>
     <div class="container">
-      <div ng-app="settingsApp" ng-controller="emtypesCtrl as emtypes" class="row">
-        <div class="col-sm-8">
+      <div ng-controller="emtypesCtrl as emtypes" class="row">
+        <div class="col-sm-9">
           <table class="table table-striped table-bordered table-center table-settings">
             <thead>
               <tr>
@@ -55,7 +55,7 @@
           </table>
           <div ng-view></div>
         </div>
-        <div class="col-sm-3 settings-menu">
+        <div class="col-sm-3 menu-right">
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title"><span class="fa fa-desktop"></span> Emisiuni</h3>

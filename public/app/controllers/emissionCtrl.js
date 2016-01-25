@@ -3,6 +3,7 @@ angular.module('emmApp', ['emmService']).controller('emmCtrl', function(Emisiuni
   vm = this;
   Emisiuni.all().success(function(data) {
     vm.emisiuni = data.emissions;
+    vm.emCount = data.emissions.length;
   });
   Emisiuni.types().success(function(data) {
     vm.emTypes = data;
