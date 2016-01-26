@@ -9,9 +9,6 @@ emissionSchema = new Schema({
     type: String,
     required: true
   },
-  fileName: {
-    type: String
-  },
   type: {
     type: String,
     required: true
@@ -23,6 +20,22 @@ emissionSchema = new Schema({
   total_duration: {
     type: Number,
     required: true
+  },
+  product: {
+    type: String,
+    required: true,
+    "default": "Autohton"
+  },
+  language: {
+    type: String,
+    required: true,
+    "default": "RO"
+  },
+  fileName: {
+    type: String
+  },
+  details: {
+    type: String
   },
   first_show_date: {
     type: Date,

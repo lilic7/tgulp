@@ -1,0 +1,74 @@
+extends layout
+
+block content
+    form(method="POST", action="/settings/testingCeckbox")
+        div(class='row form-group')
+            div(class='col-sm-5')
+                input(type='text', name='defName', placeholder='Titlu emisiune', class='form-control')
+
+        div(class='row form-group')
+            div(class='col-sm-5')
+                input(type='text', name='defType', placeholder='Gen emisiune', class='form-control')
+
+        div(class='row form-group')
+            div(class='col-sm-5')
+                input(type='text', name='defLength', placeholder='Durata totala', class='form-control')
+
+        div(class='row form-group')
+            div(class='col-sm-3')
+                | (OPTIONAL) Emisiunea este difuzata la:
+        div(class='row form-group')
+            div(class='col-sm-1')
+                input(type="text", name='hour_1', placeholder='ora', class='form-control')
+            div(class='col-sm-6 col-sm-offset-1')
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_1', value='1')
+                    | Luni
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_1', value='2')
+                    | Marti
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_1', value='3')
+                    | Miercuri
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_1', value='4')
+                    | Joi
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_1', value='5')
+                    | Vineri
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_1', value='6')
+                    | Sambata
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_1', value='7')
+                    | Duminica
+
+        div(class='row form-group')
+            div(class='col-sm-1')
+                input(type="text", name='hour_2', placeholder='ora', class='form-control')
+            div(class='col-sm-6 col-sm-offset-1')
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_2', value='1')
+                    | Luni
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_2', value='2')
+                    | Marti
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_2', value='3')
+                    | Miercuri
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_2', value='4')
+                    | Joi
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_2', value='5')
+                    | Vineri
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_2', value='6')
+                    | Sambata
+                label(class='checkbox-inline')
+                    input(type='checkbox', name='days_2', value='7')
+                    | Duminica
+
+        div(class='row form-group')
+            div(class='col-sm-2')
+                input(type='submit', value='Salveaza', class='btn btn-primary')

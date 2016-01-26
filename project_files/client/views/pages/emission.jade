@@ -2,7 +2,7 @@ extends layout
 
 block content
    div(ng-controller="emmCtrl as em")
-
+      // Forma pentru introducerea unei noi emisiuni
       div(class='modal fade', id='emModal', tabindex='-1', role='dialog', aria-labelledby='emModalLabel')
          div(class='modal-dialog', role='document')
             div(class='modal-content')
@@ -27,6 +27,7 @@ block content
                   div(class='modal-footer')
                      button(type='button', class='btn btn-default', data-dismiss='modal') Inchide
                      input(type="submit", value="Adauga", class="btn btn-primary")
+      // End Forma
 
       h2 Emisiuni
          button(type='button', class='btn btn-success', data-toggle='modal', data-target='#emModal')
