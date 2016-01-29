@@ -13,7 +13,7 @@
     <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="dist/app.js"></script>
   </head>
-  <body ng-app="emmApp">
+  <body ng-app="msportApp">
     <!-- Top menu is here-->
     <header>
       <nav class="navbar navbar-inverse">
@@ -39,17 +39,38 @@
       </nav>
     </header>
     <div class="container">
-      <div ng-controller="emtypesCtrl as emtypes" class="row">
+      <div class="row">
         <div class="col-sm-9">
-          <table class="table table-striped table-bordered table-center table-settings">
+          <table ng-controller="emTypesController as typesCtrl" class="table table-striped table-bordered table-center table-settings">
             <thead>
               <tr>
-                <td>{{ emtypes.tableTitle }}</td>
+                <td>{{ typesCtrl.tableTitle }}</td>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="type in emtypes.types">
+              <tr ng-repeat="type in typesCtrl.tableRows">
                 <td>{{ type.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table ng-controller="defaultEmissionsController as defEmCtrl" class="table table-striped table-bordered table-center">
+            <thead>
+              <tr>
+                <td colspan="4">{{ defEmCtrl.tableTitle }}</td>
+              </tr>
+              <tr>
+                <td>Nume</td>
+                <td>Genul emisiunii</td>
+                <td>Durată (minute)</td>
+                <td>Zile de difuzare</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="emission in defEmCtrl.tableRows">
+                <td>{{ emission.defaultName }}</td>
+                <td>{{ emission.defaultType }}</td>
+                <td>{{ emission.defaultLength }}</td>
+                <td><span ng-repeat="showTime in emission.defaultTime">La ora {{showTime.hour}} in zilele de<span>{{defEmCtrl.ddDays}}</span><br></span></td>
               </tr>
             </tbody>
           </table>

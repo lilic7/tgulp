@@ -6,7 +6,7 @@ emissionDefaultSchema = new Schema {
   defaultType: {type: String, required: true},
 
   defaultLength: {type: Number, required: true}
-  defaultProgram: [
+  defaultTime: [
     {
       hour: {type: String}
       days: {type: Array}

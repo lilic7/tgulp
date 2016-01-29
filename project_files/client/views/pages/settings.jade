@@ -1,15 +1,34 @@
 extends layout
 
 block content
-    div(class="row", ng-controller="emtypesCtrl as emtypes")
+    div(class="row")
         div(class="col-sm-9")
-            table(class="table table-striped table-bordered table-center table-settings")
+            table(class="table table-striped table-bordered table-center table-settings", ng-controller="emTypesController as typesCtrl")
                 thead
                     tr
-                        td {{ emtypes.tableTitle }}
+                        td {{ typesCtrl.tableTitle }}
                 tbody
-                    tr(ng-repeat="type in emtypes.types")
+                    tr(ng-repeat="type in typesCtrl.tableRows")
                         td {{ type.name }}
+            table(class="table table-striped table-bordered table-center", ng-controller="defaultEmissionsController as defEmCtrl")
+                thead
+                    tr
+                        td(colspan=4) {{ defEmCtrl.tableTitle }}
+                    tr
+                        td Nume
+                        td Genul emisiunii
+                        td Durată (minute)
+                        td Zile de difuzare
+                tbody
+                    tr(ng-repeat="emission in defEmCtrl.tableRows")
+                        td {{ emission.defaultName }}
+                        td {{ emission.defaultType }}
+                        td {{ emission.defaultLength }}
+                        td
+                            span(ng-repeat="showTime in emission.defaultTime")
+                                | La ora {{showTime.hour}} in zilele de
+                                span {{defEmCtrl.ddDays}}
+                                br
             div(ng-view)
         div(class="col-sm-3 menu-right")
             include ../blocks/settings-menu

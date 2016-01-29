@@ -1,6 +1,5 @@
 EmissionType = require '../models/Settings/emissionType'
 EmissionDefault = require '../models/Settings/emissionDefault'
-hours = new Array()
 
 module.exports = (app, express) ->
   SettingsRouter = express.Router()
@@ -23,36 +22,36 @@ module.exports = (app, express) ->
   SettingsRouter.get "/emisiuni/defaults", (req, res) ->
     res.render 'pages/default-emission-add'
 
+  SettingsRouter.get "/emisiuni/defaults/view", (req, res) ->
+    EmissionDefault.find (err, defaults) ->
+      res.send err if err
+      res.json defaults
+
   SettingsRouter.use (req, res, next) ->
-    body = req.body
-    dayTimeObj(i, body) for i in [1, 2, 3, 4, 5, 6, 7]
-    req.hours = hours;
-    hours = {}
+    req.hours = dayTimeObj(req.body);
     next()
     return
 
   SettingsRouter.post "/emisiuni/defaults/add", (req, res) ->
-    emDefault = new EmissionDefault()
+    emDefault = new Object()
     emDefault.defaultName = req.body.defName
     emDefault.defaultType = req.body.defType
     emDefault.defaultLength = req.body.defLength
-    #emDefault.defaultProgram = getTimeAndDays req
-    #emDefault.save (err) ->
-     # res.send err if err
-    #res.json {"message": "Model de emisiune salvat"}
-    res.json {body: req.body, hours: req.hours}
+    emDefault.defaultTime = req.hours
+    EmissionDefault.update {defaultName: emDefault.defaultName}, emDefault,{upsert: true}, (err) ->
+      res.send err if err
+      res.redirect('/settings/emisiuni/defaults')
+    #res.json {body: req.body, hours: req.hours}
 
-  dayTimeObj = (i, body) ->
-    hourKey = 'hour_'+i
-    daysKey = 'days_'+i
-    console.log hourKey + ":  "+ typeof body[hourKey]
-    if body[hourKey] isnt 'undefined'
-      return
-    hours.push {hour: body[hourKey], days: body[daysKey]}
-    return
-
-
-
-
+  dayTimeObj = (body) ->
+    hours = new Array()
+    for i in [1, 2, 3, 4, 5, 6, 7]
+      hourKey = 'hour_'+i
+      daysKey = 'days_'+i
+      if typeof body[hourKey] isnt "undefined" and body[hourKey] isnt ""
+        hours.push {hour: body[hourKey], days: body[daysKey]}
+      else
+        break
+    hours
 
   SettingsRouter

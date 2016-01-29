@@ -1,8 +1,7 @@
-angular.module 'emmApp', ['emmService']
-  .controller 'emmCtrl', (Emisiuni) ->
+angular.module 'emissionCtrl', ['emissionService']
+  .controller 'emissionController', (Emisiuni) ->
     vm = this
-    Emisiuni.all()
-      .success (data) ->
+    Emisiuni.all().success (data) ->
         vm.emisiuni = data.emissions
         vm.emCount = data.emissions.length
         return

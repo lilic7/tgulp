@@ -1,4 +1,4 @@
-angular.module('emmApp', ['emmService']).controller('emmCtrl', function(Emisiuni) {
+angular.module('emissionCtrl', ['emissionService']).controller('emissionController', function(Emisiuni) {
   var vm;
   vm = this;
   Emisiuni.all().success(function(data) {

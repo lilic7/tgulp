@@ -1,4 +1,4 @@
-angular.module('emmService', []).factory('Emisiuni', function($http) {
+angular.module('emissionService', []).factory('Emisiuni', function($http) {
   var emisiuniFactory;
   emisiuniFactory = {};
   emisiuniFactory.all = function() {

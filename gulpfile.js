@@ -39,18 +39,6 @@ var paths = {
         }
     },
     client: {
-        controllers: {
-            source: [client_dir+'controllers/*.coffee', client_dir+'controllers/**/*.coffee'],
-            dest: 'public/app/controllers'
-        },
-        services: {
-            source: [client_dir+'services/*.coffee', client_dir+'services/**/*.coffee'],
-            dest: 'public/app/services'
-        },
-        routes: {
-            source: [client_dir + 'routes/*.coffee', client_dir + 'routes/**/*.coffee'],
-            dest: 'public/app/routes'
-        },
         scss: {
             source: [client_dir+'scss/*.scss', client_dir+'scss/**/*.scss'],
             dest: 'public/assets/css'
@@ -72,33 +60,15 @@ var paths = {
             }
         },
         angular_files: {
-            source: client_dir+'*.coffee',
+            source: [client_dir+'coffee/*.coffee', client_dir+'coffee/**/*.coffee'],
             dest: 'public/app'
         },
         angular_to_app: {
-            source: ['public/app/controllers/*.js', 'public/app/controllers/**/*.js', 'public/app/services/*.js', 'public/app/services/**/*.js', 'public/app/routes/*.js', 'public/app/routes/**/*.js'],
+            source: ['public/app/*.js', 'public/app/**/*.js'],
             dest: 'public/dist'
         }
     }
 };
-
-gulp.task('ng-service', function(){
-    return gulp.src(paths.client.services.source)
-        .pipe(coffee({bare: true}).on('error', gutil.log))
-        .pipe(gulp.dest(paths.client.services.dest));
-});
-
-gulp.task('ng-controllers', function(){
-    return gulp.src(paths.client.controllers.source)
-        .pipe(coffee({bare: true}).on('error', gutil.log))
-        .pipe(gulp.dest(paths.client.controllers.dest));
-});
-
-gulp.task('ng-routes', function(){
-    return gulp.src(paths.client.routes.source)
-        .pipe(coffee({bare: true}).on('error', gutil.log))
-        .pipe(gulp.dest(paths.client.routes.dest));
-});
 
 gulp.task('ng-views', function () {
     return gulp.src(paths.client.views.ng.source)
@@ -112,11 +82,13 @@ gulp.task('angularApp', function () {
         .pipe(gulp.dest(paths.client.angular_files.dest));
 });
 
-gulp.task('angular-to-app', function () {
+gulp.task('angular-to-app', ['angularApp'], function () {
     return gulp.src(paths.client.angular_to_app.source)
         .pipe(ngAnnotate())
         .pipe(concat('app.js'))
+        .pipe(gulp.dest(paths.client.angular_to_app.dest))
         .pipe(uglify())
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest(paths.client.angular_to_app.dest))
 });
 
@@ -171,6 +143,7 @@ gulp.task('jade-block', function(){
 });
 
 gulp.task('watch', function(){
+    // server side
     watch(paths.server.server_file.source, batch(function (event, done) {
         gulp.start('server', done);
     }));
@@ -183,6 +156,8 @@ gulp.task('watch', function(){
     watch(paths.server.routes.source, batch(function (event, done) {
         gulp.start('routes', done);
     }));
+
+    // client side
     watch(paths.client.scss.source, batch(function (event, done) {
         gulp.start('sass', done);
     }));
@@ -193,18 +168,6 @@ gulp.task('watch', function(){
         gulp.start('jade-block', done);
     }));
     watch(paths.client.angular_files.source, batch(function (event, done) {
-        gulp.start('angularApp', done);
-    }));
-    watch(paths.client.services.source, batch(function (event, done) {
-        gulp.start('ng-service', done);
-    }));
-    watch(paths.client.controllers.source, batch(function (event, done) {
-        gulp.start('ng-controllers', done);
-    }));
-    watch(paths.client.routes.source, batch(function (event, done) {
-        gulp.start('ng-routes', done);
-    }));
-    watch(paths.client.angular_to_app.source, batch(function (event, done) {
         gulp.start('angular-to-app', done);
     }));
     watch(paths.client.views.ng.source, batch(function (event, done) {
@@ -235,6 +198,7 @@ gulp.task('browserSync', ['nodemon'], function(){
         proxy: 'http://localhost:5000',
         files: [
             'public/app/*.js',
+            'public/app/**/*.js',
             'public/app/views/**/*.jade',
             'public/app/views/parts/**/*.html',
             'public/assets/css/*.css',

@@ -17,9 +17,16 @@ emissionDefaultSchema = new Schema({
     type: Number,
     required: true
   },
-  defaultProgram: {
-    type: Array
-  }
+  defaultTime: [
+    {
+      hour: {
+        type: String
+      },
+      days: {
+        type: Array
+      }
+    }
+  ]
 });
 
 module.exports = mongoose.model("EmissionDefault", emissionDefaultSchema);

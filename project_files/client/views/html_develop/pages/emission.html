@@ -13,7 +13,7 @@
     <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="dist/app.js"></script>
   </head>
-  <body ng-app="emmApp">
+  <body ng-app="msportApp">
     <!-- Top menu is here-->
     <header>
       <nav class="navbar navbar-inverse">
@@ -39,7 +39,7 @@
       </nav>
     </header>
     <div class="container">
-      <div ng-controller="emmCtrl as em">
+      <div ng-controller="emissionController as emCTRL">
         <!-- Forma pentru introducerea unei noi emisiuni-->
         <div id="emModal" tabindex="-1" role="dialog" aria-labelledby="emModalLabel" class="modal fade">
           <div role="document" class="modal-dialog">
@@ -53,15 +53,15 @@
                   <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
                       <div class="form-group">
-                        <input type="text" placeholder="Nume" name="name" ng-model="em.emName" class="form-control">
+                        <input type="text" placeholder="Nume" name="name" ng-model="emCTRL.emName" class="form-control">
                       </div>
                       <div class="form-group">
-                        <select name="type" ng-model="em.emType" class="form-control">
-                          <option ng-repeat="emType in em.emTypes" value="{{emType.name}}">{{emType.name}}</option>
+                        <select name="type" ng-model="emCTRL.emType" class="form-control">
+                          <option ng-repeat="emType in emCTRL.emTypes" value="{{emType.name}}">{{emType.name}}</option>
                         </select>
                       </div>
                       <div class="form-group">
-                        <input type="text" placeholder="Nume" name="fullName" disabled value="{{em.fullTitle()}}" class="form-control">
+                        <input type="text" placeholder="Nume" name="fullName" disabled value="{{emCTRL.fullTitle()}}" class="form-control">
                       </div>
                       <div class="form-group">
                         <input type="text" placeholder="Durata totala" name="fullName" disabled class="form-control">
@@ -82,8 +82,8 @@
         <h2>Emisiuni
           <button type="button" data-toggle="modal" data-target="#emModal" class="btn btn-success"><span class="fa fa-pencil-square-o">Adauga</span></button>
         </h2>
-        <h4 ng-hide="em.emCount">Nu exista nici o emisiune</h4>
-        <table ng-show="em.emCount" class="table table-striped table-bordered table-center">
+        <h4 ng-hide="emCTRL.emCount">Nu exista nici o emisiune</h4>
+        <table ng-show="emCTRL.emCount" class="table table-striped table-bordered table-center">
           <thead>
             <tr>
               <td>Program</td>
@@ -94,7 +94,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="emisiune in em.emisiuni">
+            <tr ng-repeat="emisiune in emCTRL.emisiuni">
               <td>{{ emisiune.type.charAt(0).toUpperCase()+emisiune.type.substr(1) + ": " + emisiune.name }}</td>
               <td>{{ emisiune.type }}</td>
               <td>{{}}</td>

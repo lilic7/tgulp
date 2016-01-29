@@ -1,10 +1,8 @@
-var EmissionDefault, EmissionType, hours;
+var EmissionDefault, EmissionType;
 
 EmissionType = require('../models/Settings/emissionType');
 
 EmissionDefault = require('../models/Settings/emissionDefault');
-
-hours = new Array();
 
 module.exports = function(app, express) {
   var SettingsRouter, dayTimeObj;
@@ -36,41 +34,54 @@ module.exports = function(app, express) {
   SettingsRouter.get("/emisiuni/defaults", function(req, res) {
     return res.render('pages/default-emission-add');
   });
+  SettingsRouter.get("/emisiuni/defaults/view", function(req, res) {
+    return EmissionDefault.find(function(err, defaults) {
+      if (err) {
+        res.send(err);
+      }
+      return res.json(defaults);
+    });
+  });
   SettingsRouter.use(function(req, res, next) {
-    var body, i, j, len, ref;
-    body = req.body;
-    ref = [1, 2, 3, 4, 5, 6, 7];
-    for (j = 0, len = ref.length; j < len; j++) {
-      i = ref[j];
-      dayTimeObj(i, body);
-    }
-    req.hours = hours;
-    hours = {};
+    req.hours = dayTimeObj(req.body);
     next();
   });
   SettingsRouter.post("/emisiuni/defaults/add", function(req, res) {
     var emDefault;
-    emDefault = new EmissionDefault();
+    emDefault = new Object();
     emDefault.defaultName = req.body.defName;
     emDefault.defaultType = req.body.defType;
     emDefault.defaultLength = req.body.defLength;
-    return res.json({
-      body: req.body,
-      hours: req.hours
+    emDefault.defaultTime = req.hours;
+    return EmissionDefault.update({
+      defaultName: emDefault.defaultName
+    }, emDefault, {
+      upsert: true
+    }, function(err) {
+      if (err) {
+        res.send(err);
+      }
+      return res.redirect('/settings/emisiuni/defaults');
     });
   });
-  dayTimeObj = function(i, body) {
-    var daysKey, hourKey;
-    hourKey = 'hour_' + i;
-    daysKey = 'days_' + i;
-    console.log(hourKey + ":  " + typeof body[hourKey]);
-    if (body[hourKey] !== 'undefined') {
-      return;
+  dayTimeObj = function(body) {
+    var daysKey, hourKey, hours, i, j, len, ref;
+    hours = new Array();
+    ref = [1, 2, 3, 4, 5, 6, 7];
+    for (j = 0, len = ref.length; j < len; j++) {
+      i = ref[j];
+      hourKey = 'hour_' + i;
+      daysKey = 'days_' + i;
+      if (typeof body[hourKey] !== "undefined" && body[hourKey] !== "") {
+        hours.push({
+          hour: body[hourKey],
+          days: body[daysKey]
+        });
+      } else {
+        break;
+      }
     }
-    hours.push({
-      hour: body[hourKey],
-      days: body[daysKey]
-    });
+    return hours;
   };
   return SettingsRouter;
 };

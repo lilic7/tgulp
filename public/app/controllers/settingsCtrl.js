@@ -1,8 +1,8 @@
-angular.module('settingsApp', ['settingsService', 'settingRoutes']).controller('emtypesCtrl', function(Settings) {
+angular.module('emTypesCtrl', ['settingsService', 'settingRoutes']).controller('defaultEmissionsCtrl', function(Settings) {
   var vm;
   vm = this;
-  Settings.allEmTypes().success(function(data) {
-    vm.tableTitle = "Genuri emisiuni";
+  Settings.defaultEmissions().success(function(data) {
+    vm.defEmissionsTitle = "Modele de emisiuni";
     vm.types = data;
   });
 });
