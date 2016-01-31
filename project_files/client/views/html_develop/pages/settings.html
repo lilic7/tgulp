@@ -61,16 +61,23 @@
               <tr>
                 <td>Nume</td>
                 <td>Genul emisiunii</td>
-                <td>Durată (minute)</td>
-                <td>Zile de difuzare</td>
+                <td>Durată</td>
+                <td>Zilele si orele de difuzare</td>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="emission in defEmCtrl.tableRows">
-                <td>{{ emission.defaultName }}</td>
+                <td><strong>{{ emission.defaultName }}</strong></td>
                 <td>{{ emission.defaultType }}</td>
                 <td>{{ emission.defaultLength }}</td>
-                <td><span ng-repeat="showTime in emission.defaultTime">La ora {{showTime.hour}} in zilele de<span>{{defEmCtrl.ddDays}}</span><br></span></td>
+                <td>
+                  <table class="table table-modele-emisiuni">
+                    <tr ng-repeat="showTime in emission.defaultTime" ng-show="showTime.hour">
+                      <td>{{showTime.daysStr}}</td>
+                      <td class="hours"><strong>{{showTime.hour}}</strong></td>
+                    </tr>
+                  </table>
+                </td>
               </tr>
             </tbody>
           </table>

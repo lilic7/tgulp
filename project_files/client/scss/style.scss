@@ -1,4 +1,7 @@
+@import 'ubuntu';
+
 body {
+  font-family:"Ubuntu";
   padding-top: 50px;
 }
 
@@ -12,9 +15,21 @@ table{
   }
   &.table-center{
     text-align: center;
+    td{
+      display: table-cell;
+      vertical-align: middle !important;
+    }
   }
   &.table-settings{
     width: 250px;
+  }
+  &.table-modele-emisiuni{
+    border: 1px solid #ddd;
+    margin-bottom: 0;
+
+    td.hours{
+      width: 80px;
+    }
   }
 }
 

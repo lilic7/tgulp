@@ -72,5 +72,26 @@ block content
         div(class='row form-group')
             div(class='col-sm-2')
                 input(type='submit', value='Salveaza', class='btn btn-primary')
-    div(class='row' ng-controller='defaultEmissionsCtrl as defEms')
-        | {{ defEms }}
+    div(class='row')
+        table(class="table table-striped table-bordered table-center", ng-controller="defaultEmissionsController as defEmCtrl")
+            thead
+                tr
+                    td(colspan=4) {{ defEmCtrl.tableTitle }}
+                tr
+                    td Nume
+                    td Genul emisiunii
+                    td Durată
+                    td Zilele si orele de difuzare
+            tbody
+                tr(ng-repeat="emission in defEmCtrl.tableRows")
+                    td
+                        strong {{ emission.defaultName }}
+                    td {{ emission.defaultType }}
+                    td {{ emission.defaultLength }}
+                    td
+                        table(class="table table-modele-emisiuni")
+                            tr(ng-repeat="showTime in emission.defaultTime" ng-show="showTime.hour")
+                                td {{showTime.daysStr}}
+                                td(class="hours")
+                                    strong {{showTime.hour}}
+

@@ -15,6 +15,8 @@
     "bootstrap": "~3.3.6",
     "font-awesome": "~4.5.0",
     "angular": "~1.4.8",
-    "jquery": "~2.2.0"
+    "jquery": "~2.2.0",
+    "indieFlower": "https://google-fonts.azurewebsites.net/googleFonts/indieFlower?family=Indie+Flower",
+    "Ubuntu": "https://google-fonts.azurewebsites.net/googleFonts/Fonts/Ubuntu?family=Ubuntu"
   }
 }

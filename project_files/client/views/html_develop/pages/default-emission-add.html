@@ -120,7 +120,36 @@
           </div>
         </div>
       </form>
-      <div ng-controller="defaultEmissionsCtrl as defEms" class="row">{{ defEms }}</div>
+      <div class="row">
+        <table ng-controller="defaultEmissionsController as defEmCtrl" class="table table-striped table-bordered table-center">
+          <thead>
+            <tr>
+              <td colspan="4">{{ defEmCtrl.tableTitle }}</td>
+            </tr>
+            <tr>
+              <td>Nume</td>
+              <td>Genul emisiunii</td>
+              <td>Durată</td>
+              <td>Zilele si orele de difuzare</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="emission in defEmCtrl.tableRows">
+              <td><strong>{{ emission.defaultName }}</strong></td>
+              <td>{{ emission.defaultType }}</td>
+              <td>{{ emission.defaultLength }}</td>
+              <td>
+                <table class="table table-modele-emisiuni">
+                  <tr ng-repeat="showTime in emission.defaultTime" ng-show="showTime.hour">
+                    <td>{{showTime.daysStr}}</td>
+                    <td class="hours"><strong>{{showTime.hour}}</strong></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>

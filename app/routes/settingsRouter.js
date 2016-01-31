@@ -18,11 +18,22 @@ module.exports = function(app, express) {
       return res.json(types);
     });
   });
+  SettingsRouter.use(function(req, res, next) {
+    if (req.body.tname === "") {
+      res.redirect('back');
+    } else {
+      next();
+    }
+  });
   SettingsRouter.post("/emisiuni/types", function(req, res) {
     var type;
-    type = new EmissionType();
+    type = new Object();
     type.name = req.body.tname;
-    return type.save(function(err) {
+    return EmissionType.update({
+      name: type.name
+    }, type, {
+      upsert: true
+    }, function(err) {
       if (err) {
         res.send(err);
       }
@@ -35,7 +46,9 @@ module.exports = function(app, express) {
     return res.render('pages/default-emission-add');
   });
   SettingsRouter.get("/emisiuni/defaults/view", function(req, res) {
-    return EmissionDefault.find(function(err, defaults) {
+    return EmissionDefault.find().sort({
+      'defaultName': 1
+    }).exec(function(err, defaults) {
       if (err) {
         res.send(err);
       }
@@ -43,8 +56,12 @@ module.exports = function(app, express) {
     });
   });
   SettingsRouter.use(function(req, res, next) {
-    req.hours = dayTimeObj(req.body);
-    next();
+    if (req.body.defName === "" || typeof req.body.defName === "undefined") {
+      res.redirect('back');
+    } else {
+      req.hours = dayTimeObj(req.body);
+      next();
+    }
   });
   SettingsRouter.post("/emisiuni/defaults/add", function(req, res) {
     var emDefault;
@@ -53,7 +70,7 @@ module.exports = function(app, express) {
     emDefault.defaultType = req.body.defType;
     emDefault.defaultLength = req.body.defLength;
     emDefault.defaultTime = req.hours;
-    return EmissionDefault.update({
+    EmissionDefault.update({
       defaultName: emDefault.defaultName
     }, emDefault, {
       upsert: true
@@ -61,8 +78,9 @@ module.exports = function(app, express) {
       if (err) {
         res.send(err);
       }
-      return res.redirect('/settings/emisiuni/defaults');
+      res.redirect('/settings/emisiuni/defaults');
     });
+    emDefault = {};
   });
   dayTimeObj = function(body) {
     var daysKey, hourKey, hours, i, j, len, ref;

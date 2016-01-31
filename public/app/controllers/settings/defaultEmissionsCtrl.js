@@ -1,31 +1,50 @@
 angular.module('defaultEmissionsCtrl', []).controller('defaultEmissionsController', function(Settings) {
-  var vm;
+  var dayNames, toHour, vm;
   vm = this;
   vm.days = ["Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă", "Duminică"];
   Settings.defaultEmissions().success(function(data) {
-    var dayNum, i, items, j, len, len1, program, ref;
+    var dayNum, i, j, k, l, len, len1, program, ref;
     vm.tableTitle = "Modele de emisiuni";
-    items = new Array();
-    for (i = 0, len = data.length; i < len; i++) {
+    for (i = k = 0, len = data.length; k < len; i = ++k) {
       program = data[i];
+      data[i].defaultLength = toHour(program.defaultLength);
       ref = program.defaultTime;
-      for (j = 0, len1 = ref.length; j < len1; j++) {
+      for (j = l = 0, len1 = ref.length; l < len1; j = ++l) {
         dayNum = ref[j];
         if (dayNum.days.length !== 0) {
-          items.push(vm.dayNames(dayNum.days));
+          data[i].defaultTime[j].daysStr = dayNames(dayNum.days);
         }
       }
     }
-    vm.ddDays = items;
     vm.tableRows = data;
   });
-  vm.dayNames = function(daysNum) {
-    var dNum, daysStr, i, len;
+  dayNames = function(daysNum) {
+    var dNum, daysStr, k, len;
     daysStr = vm.days[daysNum[0] - 1];
-    for (i = 0, len = daysNum.length; i < len; i++) {
-      dNum = daysNum[i];
+    daysNum.splice(0, 1);
+    for (k = 0, len = daysNum.length; k < len; k++) {
+      dNum = daysNum[k];
       daysStr += ", " + vm.days[dNum - 1];
     }
-    return daysNum;
+    return daysStr;
+  };
+  toHour = function(minutes) {
+    var duration, hours;
+    duration = "";
+    hours = Math.floor(minutes / 60);
+    if (hours > 1) {
+      duration += hours + " ore ";
+    }
+    if (hours === 1) {
+      duration += hours + " oră ";
+    }
+    minutes = minutes % 60;
+    if (minutes !== 0) {
+      if (minutes < 10) {
+        duration += "0";
+      }
+      duration += minutes + " min";
+    }
+    return duration;
   };
 });

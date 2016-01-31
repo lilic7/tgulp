@@ -17,18 +17,21 @@ block content
                     tr
                         td Nume
                         td Genul emisiunii
-                        td Durată (minute)
-                        td Zile de difuzare
+                        td Durată
+                        td Zilele si orele de difuzare
                 tbody
                     tr(ng-repeat="emission in defEmCtrl.tableRows")
-                        td {{ emission.defaultName }}
+                        td
+                            strong {{ emission.defaultName }}
                         td {{ emission.defaultType }}
                         td {{ emission.defaultLength }}
                         td
-                            span(ng-repeat="showTime in emission.defaultTime")
-                                | La ora {{showTime.hour}} in zilele de
-                                span {{defEmCtrl.ddDays}}
-                                br
+                            table(class="table table-modele-emisiuni")
+                                tr(ng-repeat="showTime in emission.defaultTime" ng-show="showTime.hour")
+                                    td {{showTime.daysStr}}
+                                    td(class="hours")
+                                        strong {{showTime.hour}}
+
             div(ng-view)
         div(class="col-sm-3 menu-right")
             include ../blocks/settings-menu
