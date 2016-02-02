@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8">
+    <title>MdSport Stuff</title>
+    <base href="/">
+    <link rel="stylesheet" href="assets/libs/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.min.css">
+    <script src="assets/libs/angular/angular.min.js"></script>
+    <script src="assets/libs/angular-route/angular-route.min.js"></script>
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="dist/app.js"></script>
+  </head>
+  <body ng-app="msportApp">
+    <!-- Top menu is here-->
+    <header>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand"><i class="fa fa-home"></i>MD Sport</a>
+            </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="/stiri"><i class="fa fa-files-o"></i> Stiri</a></li>
+                <li><a href="/ecou"><i class="fa fa-microphone"></i> Ecoul Sportului</a></li>
+                <li><a href="/program"><i class="fa fa-list-alt"></i> Program</a></li>
+                <li><a href="/emisiuni"><i class="fa fa-play-circle-o"></i> Emisiuni</a></li>
+                <li><a href="/settings"><i class="fa fa-cog"></i> Setari</a></li>
+              </ul>
+              <div ng-hide="true" class="nav navbar-nav navbar-right">
+                <div class="btn-group"><a href="/login" class="btn btn-default navbar-btn"><i class="fa fa-sign-in"></i> Login</a><a href="/register" class="btn btn-default navbar-btn"><i class="fa fa-user"></i> Register</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9">
+          <div ng-controller="defaultEmissionsController as defEmCtrl">
+            <form method="POST" action="/settings/emisiuni/defaults/add">
+              <div class="row form-group">
+                <div class="col-sm-5">
+                  <input type="text" name="defName" placeholder="Titlu emisiune" ng-model="defEmCtrl.updateEmission.defaultName" class="form-control">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-sm-5">
+                  <select name="defType" class="form-control">
+                    <option ng-repeat="type in defEmCtrl.types" value="{{type.name}}" ng-selected="defEmCtrl.updateEmission.defaultType == type.name">{{type.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-sm-5">
+                  <input type="text" name="defLength" placeholder="Durata totala" ng-model="defEmCtrl.updateEmission.defaultLength" class="form-control">
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-sm-6">(OPTIONAL) Emisiunea este difuzata la:</div>
+              </div>
+              <div class="row form-group">
+                <div class="col-sm-2">
+                  <input type="text" name="hour_1" placeholder="ora" ng-model="defEmCtrl.updateEmission.defaultTime[0].hour" class="form-control">
+                </div>
+                <div class="col-sm-8 col-sm-offset-1">
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="days_1" value="1" ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('1') &gt; -1">Luni
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="days_1" value="2" ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('2') &gt; -1">Marti
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="days_1" value="3" ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('3') &gt; -1">Miercuri
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="days_1" value="4" ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('4') &gt; -1">Joi
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="days_1" value="5" ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('5') &gt; -1">Vineri
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="days_1" value="6" ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('6') &gt; -1">Sambata
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" name="days_1" value="7" ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('7') &gt; -1">Duminica
+                  </label>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-sm-2">
+                  <input type="submit" value="Salveaza" class="btn btn-primary">
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <table class="table table-striped table-bordered table-center">
+                <thead>
+                  <tr>
+                    <td colspan="5">{{ defEmCtrl.tableTitle }}</td>
+                  </tr>
+                  <tr>
+                    <td>Nume</td>
+                    <td>Genul emisiunii</td>
+                    <td>Durată</td>
+                    <td>Zilele si orele de difuzare</td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="emission in defEmCtrl.tableRows">
+                    <td><strong>{{ emission.defaultName }}</strong></td>
+                    <td>{{ emission.defaultType }}</td>
+                    <td>{{ emission.defaultLength }}</td>
+                    <td>
+                      <table class="table table-modele-emisiuni">
+                        <tr ng-repeat="showTime in emission.defaultTime" ng-show="showTime.hour">
+                          <td>{{showTime.daysStr}}</td>
+                          <td class="hours"><strong>{{showTime.hour}}</strong></td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td>
+                      <button value="{{emission._id}}" ng-click="defEmCtrl.Set_em_id(emission._id)" class="btn btn-xs btn-success">Editeaza</button>
+                      <button value="{{emission._id}}" class="btn btn-xs btn-danger">Sterge</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 menu-right">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="fa fa-desktop"></span> Emisiuni</h3>
+            </div><a href="/settings/emisiuni/types" class="list-group-item">Gen emisiuni</a><a href="/settings/emisiuni/defaults" class="list-group-item">Modele de emisiuni</a><a href="/settings/emisiuni/mathes" class="list-group-item">Meciuri</a>
+          </div>
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title"><span class="fa fa-newspaper-o"></span> Stiri</h3>
+            </div><a href="#" class="list-group-item">Categorii</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

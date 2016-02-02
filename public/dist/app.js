@@ -46,10 +46,13 @@ angular.module('settingsService', []).factory('Settings', ["$http", function($ht
   var settingsFactory;
   settingsFactory = {};
   settingsFactory.emTypes = function() {
-    return $http.get('/settings/emisiuni/types');
+    return $http.get('/settings/json/types');
   };
   settingsFactory.defaultEmissions = function() {
-    return $http.get('/settings/emisiuni/defaults/view');
+    return $http.get('/settings/json/defaults');
+  };
+  settingsFactory.getDefaultForEdit = function(id) {
+    return $http.get('/settings/json/defaults/edit/' + id);
   };
   return settingsFactory;
 }]);
@@ -58,6 +61,14 @@ angular.module('defaultEmissionsCtrl', []).controller('defaultEmissionsControlle
   var dayNames, toHour, vm;
   vm = this;
   vm.days = ["Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă", "Duminică"];
+  vm.Set_em_id = function(id) {
+    return Settings.getDefaultForEdit(id).success(function(emission) {
+      return vm.updateEmission = emission[0];
+    });
+  };
+  Settings.emTypes().success(function(data) {
+    vm.types = data;
+  });
   Settings.defaultEmissions().success(function(data) {
     var dayNum, i, j, k, l, len, len1, program, ref;
     vm.tableTitle = "Modele de emisiuni";

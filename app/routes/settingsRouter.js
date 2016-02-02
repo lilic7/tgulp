@@ -10,13 +10,45 @@ module.exports = function(app, express) {
   SettingsRouter.get("/", function(req, res) {
     return res.render('pages/settings');
   });
-  SettingsRouter.get("/emisiuni/types", function(req, res) {
+  SettingsRouter.get("/json/types", function(req, res) {
     return EmissionType.find(function(err, types) {
       if (err) {
-        res.send(err);
+        res.json({
+          message: "Unable to load types",
+          error: err
+        });
       }
       return res.json(types);
     });
+  });
+  SettingsRouter.get("/json/defaults", function(req, res) {
+    return EmissionDefault.find().sort({
+      'defaultName': 1
+    }).exec(function(err, defaults) {
+      if (err) {
+        res.json({
+          message: "Unable to load defaults",
+          error: err
+        });
+      }
+      return res.json(defaults);
+    });
+  });
+  SettingsRouter.get("/json/defaults/edit/:id", function(req, res) {
+    return EmissionDefault.find({
+      "_id": req.params.id
+    }).exec(function(err, emission) {
+      if (err) {
+        res.json({
+          message: "Unable to load emission",
+          error: err
+        });
+      }
+      return res.json(emission);
+    });
+  });
+  SettingsRouter.get("/emisiuni/types", function(req, res) {
+    return res.render("pages/settings/types");
   });
   SettingsRouter.use(function(req, res, next) {
     if (req.body.tname === "") {
@@ -43,17 +75,7 @@ module.exports = function(app, express) {
     });
   });
   SettingsRouter.get("/emisiuni/defaults", function(req, res) {
-    return res.render('pages/default-emission-add');
-  });
-  SettingsRouter.get("/emisiuni/defaults/view", function(req, res) {
-    return EmissionDefault.find().sort({
-      'defaultName': 1
-    }).exec(function(err, defaults) {
-      if (err) {
-        res.send(err);
-      }
-      return res.json(defaults);
-    });
+    return res.render('pages/settings/defaults');
   });
   SettingsRouter.use(function(req, res, next) {
     if (req.body.defName === "" || typeof req.body.defName === "undefined") {

@@ -3,9 +3,12 @@ angular.module 'settingsService', []
     settingsFactory = {}
 
     settingsFactory.emTypes = () ->
-      $http.get '/settings/emisiuni/types'
+      $http.get '/settings/json/types'
 
     settingsFactory.defaultEmissions = () ->
-      $http.get '/settings/emisiuni/defaults/view'
+      $http.get '/settings/json/defaults'
+
+    settingsFactory.getDefaultForEdit = (id) ->
+      $http.get '/settings/json/defaults/edit/'+id
 
     settingsFactory

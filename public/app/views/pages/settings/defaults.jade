@@ -1,0 +1,77 @@
+extends ../settings
+
+block settings-content
+    div(ng-controller="defaultEmissionsController as defEmCtrl")
+        form(method="POST", action="/settings/emisiuni/defaults/add")
+            div(class='row form-group')
+                div(class='col-sm-5')
+                    input(type='text', name='defName', placeholder='Titlu emisiune', class='form-control', ng-model="defEmCtrl.updateEmission.defaultName")
+
+            div(class='row form-group')
+                div(class='col-sm-5')
+                    select(name='defType', class='form-control')
+                        option(ng-repeat="type in defEmCtrl.types", value="{{type.name}}", ng-selected="defEmCtrl.updateEmission.defaultType == type.name") {{type.name}}
+
+
+            div(class='row form-group')
+                div(class='col-sm-5')
+                    input(type='text', name='defLength', placeholder='Durata totala', class='form-control', ng-model="defEmCtrl.updateEmission.defaultLength")
+
+            div(class='row form-group')
+                div(class='col-sm-6')
+                    | (OPTIONAL) Emisiunea este difuzata la:
+            div(class='row form-group')
+                div(class='col-sm-2')
+                    input(type="text", name='hour_1', placeholder='ora', class='form-control', ng-model="defEmCtrl.updateEmission.defaultTime[0].hour")
+                div(class='col-sm-8 col-sm-offset-1')
+                    label(class='checkbox-inline')
+                        input(type='checkbox', name='days_1', value='1', ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('1') > -1")
+                        | Luni
+                    label(class='checkbox-inline')
+                        input(type='checkbox', name='days_1', value='2', ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('2') > -1")
+                        | Marti
+                    label(class='checkbox-inline')
+                        input(type='checkbox', name='days_1', value='3', ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('3') > -1")
+                        | Miercuri
+                    label(class='checkbox-inline')
+                        input(type='checkbox', name='days_1', value='4', ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('4') > -1")
+                        | Joi
+                    label(class='checkbox-inline')
+                        input(type='checkbox', name='days_1', value='5', ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('5') > -1")
+                        | Vineri
+                    label(class='checkbox-inline')
+                        input(type='checkbox', name='days_1', value='6', ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('6') > -1")
+                        | Sambata
+                    label(class='checkbox-inline')
+                        input(type='checkbox', name='days_1', value='7', ng-checked="defEmCtrl.updateEmission.defaultTime[0].days.indexOf('7') > -1")
+                        | Duminica
+
+            div(class='row form-group')
+                div(class='col-sm-2')
+                    input(type='submit', value='Salveaza', class='btn btn-primary')
+        div(class='row')
+            table(class="table table-striped table-bordered table-center")
+                thead
+                    tr
+                        td(colspan=5) {{ defEmCtrl.tableTitle }}
+                    tr
+                        td Nume
+                        td Genul emisiunii
+                        td Durată
+                        td Zilele si orele de difuzare
+                        td
+                tbody
+                    tr(ng-repeat="emission in defEmCtrl.tableRows")
+                        td
+                            strong {{ emission.defaultName }}
+                        td {{ emission.defaultType }}
+                        td {{ emission.defaultLength }}
+                        td
+                            table(class="table table-modele-emisiuni")
+                                tr(ng-repeat="showTime in emission.defaultTime" ng-show="showTime.hour")
+                                    td {{showTime.daysStr}}
+                                    td(class="hours")
+                                        strong {{showTime.hour}}
+                        td
+                            button(class="btn btn-xs btn-success", value="{{emission._id}}", ng-click="defEmCtrl.Set_em_id(emission._id)") Editeaza
+                            button(class="btn btn-xs btn-danger", value="{{emission._id}}") Sterge

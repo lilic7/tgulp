@@ -3,6 +3,14 @@ angular.module 'defaultEmissionsCtrl', []
     vm = this
     vm.days = ["Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă", "Duminică"]
 
+    vm.Set_em_id = (id) ->
+      Settings.getDefaultForEdit(id).success (emission) ->
+        vm.updateEmission = emission[0]
+
+    Settings.emTypes().success (data) ->
+      vm.types = data
+      return
+
     Settings.defaultEmissions().success (data) ->
       vm.tableTitle = "Modele de emisiuni"
       for program, i in data

@@ -1,4 +1,4 @@
-EmissionType = require '../models/Settings/emissionType'
+EmissionType    = require '../models/Settings/emissionType'
 EmissionDefault = require '../models/Settings/emissionDefault'
 
 module.exports = (app, express) ->
@@ -7,14 +7,37 @@ module.exports = (app, express) ->
   SettingsRouter.get "/", (req, res) ->
     res.render 'pages/settings'
 
+# --JSON return--
+# Genuri de emisiuni
+  SettingsRouter.get "/json/types", (req, res) ->
+    EmissionType.find (err, types) ->
+      res.json {message: "Unable to load types", error: err} if err
+      res.json types
+
+# Modele de emisiuni
+  SettingsRouter.get "/json/defaults", (req, res) ->
+    EmissionDefault.find()
+    .sort {'defaultName': 1}
+    .exec (err, defaults) ->
+      res.json {message: "Unable to load defaults", error: err} if err
+      res.json defaults
+
+# Get un model pentru editare
+  SettingsRouter.get "/json/defaults/edit/:id", (req, res) ->
+    EmissionDefault.find({"_id": req.params.id})
+    .exec (err, emission) ->
+      res.json {message: "Unable to load emission", error: err} if err
+      res.json emission
+# --End JSON return--
+
 # --Emisiuni--
 
 # Genuri de emisiuni
-# GET genurile de emisiuni. return JSON
+
+# Tipuri de emisiuni
+# LAYOUT pentru tipuri
   SettingsRouter.get "/emisiuni/types", (req, res) ->
-    EmissionType.find (err, types) ->
-      res.send err if err
-      res.json types
+    res.render "pages/settings/types"
 
 # MIDDLEWARE: Verificare gen
   SettingsRouter.use (req, res, next) ->
@@ -32,21 +55,10 @@ module.exports = (app, express) ->
       res.send err if err
       res.json {"message": "Gen nou creat"}
 
-
 # Modele de emisiuni
 # LAYOUT pentru modele
   SettingsRouter.get "/emisiuni/defaults", (req, res) ->
-    res.render 'pages/default-emission-add'
-
-
-# GET modelele de emisiuni. return JSON
-  SettingsRouter.get "/emisiuni/defaults/view", (req, res) ->
-    EmissionDefault.find()
-      .sort {'defaultName': 1}
-      .exec (err, defaults) ->
-          res.send err if err
-          res.json defaults
-
+    res.render 'pages/settings/defaults'
 
 # MIDDLEWARE: Verificarea datelor
   SettingsRouter.use (req, res, next) ->
@@ -56,7 +68,6 @@ module.exports = (app, express) ->
       req.hours = dayTimeObj(req.body);
       next()
     return
-
 
 # POST: Salvarea modelului de emisiune in DB
   SettingsRouter.post "/emisiuni/defaults/add", (req, res) ->
