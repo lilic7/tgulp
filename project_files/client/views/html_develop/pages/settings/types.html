@@ -41,7 +41,38 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-9">
-          <h2>Types page</h2>
+          <div ng-controller="emTypesController as typesCtrl">
+            <form method="POST" action="/settings/emisiuni/types" class="form-inline">
+              <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <table class="table table-striped table-bordered table-center table-settings">
+                    <thead>
+                      <tr>
+                        <td colspan="2">{{ typesCtrl.tableTitle }}</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="type in typesCtrl.tableRows">
+                        <td>{{ type.name }}</td>
+                        <td>
+                          <button value="{{type._id}}" ng-click="typesCtrl" class="btn btn-xs btn-success">Editeaza</button>
+                          <button value="{{type._id}}" class="btn btn-xs btn-danger">Sterge</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <div class="input-group">
+                            <input type="text" placeholder="Ex: Talk-show" required name="tname" class="form-control"><span class="input-group-btn">
+                              <input type="submit" value="Salveaza" class="btn btn-success"></span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
         <div class="col-sm-3 menu-right">
           <div class="panel panel-info">

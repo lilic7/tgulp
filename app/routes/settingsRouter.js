@@ -69,9 +69,7 @@ module.exports = function(app, express) {
       if (err) {
         res.send(err);
       }
-      return res.json({
-        "message": "Gen nou creat"
-      });
+      return res.redirect('/settings/emisiuni/types');
     });
   });
   SettingsRouter.get("/emisiuni/defaults", function(req, res) {

@@ -31,7 +31,6 @@ module.exports = (app, express) ->
 # --End JSON return--
 
 # --Emisiuni--
-
 # Genuri de emisiuni
 
 # Tipuri de emisiuni
@@ -53,7 +52,7 @@ module.exports = (app, express) ->
     type.name = req.body.tname
     EmissionType.update {name: type.name}, type, {upsert: true}, (err) ->
       res.send err if err
-      res.json {"message": "Gen nou creat"}
+      res.redirect('/settings/emisiuni/types')
 
 # Modele de emisiuni
 # LAYOUT pentru modele

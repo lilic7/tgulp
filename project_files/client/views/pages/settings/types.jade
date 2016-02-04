@@ -1,4 +1,23 @@
 extends ../settings
 
 block settings-content
-    h2 Types page
+    div(ng-controller="emTypesController as typesCtrl")
+        form(method="POST", action="/settings/emisiuni/types", class='form-inline')
+            div(class='row')
+                div(class="col-sm-6 col-sm-offset-3")
+                    table(class="table table-striped table-bordered table-center table-settings")
+                        thead
+                            tr
+                                td(colspan=2) {{ typesCtrl.tableTitle }}
+                        tbody
+                            tr(ng-repeat="type in typesCtrl.tableRows")
+                                td {{ type.name }}
+                                td
+                                    button(class="btn btn-xs btn-success", value="{{type._id}}", ng-click="typesCtrl") Editeaza
+                                    button(class="btn btn-xs btn-danger", value="{{type._id}}") Sterge
+                            tr
+                                td(colspan=2)
+                                    div(class='input-group')
+                                        input(type='text', class='form-control', placeholder='Ex: Talk-show', required=true, name='tname')
+                                        span(class='input-group-btn')
+                                            input(type='submit', value='Salveaza', class='btn btn-success')

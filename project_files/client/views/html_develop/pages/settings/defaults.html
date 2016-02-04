@@ -45,19 +45,19 @@
             <form method="POST" action="/settings/emisiuni/defaults/add">
               <div class="row form-group">
                 <div class="col-sm-5">
-                  <input type="text" name="defName" placeholder="Titlu emisiune" ng-model="defEmCtrl.updateEmission.defaultName" class="form-control">
+                  <input type="text" name="defName" placeholder="Titlu emisiune" ng-model="defEmCtrl.updateEmission.defaultName" required class="form-control">
                 </div>
               </div>
               <div class="row form-group">
                 <div class="col-sm-5">
-                  <select name="defType" class="form-control">
+                  <select name="defType" required class="form-control">
                     <option ng-repeat="type in defEmCtrl.types" value="{{type.name}}" ng-selected="defEmCtrl.updateEmission.defaultType == type.name">{{type.name}}</option>
                   </select>
                 </div>
               </div>
               <div class="row form-group">
                 <div class="col-sm-5">
-                  <input type="text" name="defLength" placeholder="Durata totala" ng-model="defEmCtrl.updateEmission.defaultLength" class="form-control">
+                  <input type="text" name="defLength" placeholder="Durata totala (minute)" ng-model="defEmCtrl.updateEmission.defaultLength" required class="form-control">
                 </div>
               </div>
               <div class="row form-group">

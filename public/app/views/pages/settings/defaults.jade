@@ -5,17 +5,17 @@ block settings-content
         form(method="POST", action="/settings/emisiuni/defaults/add")
             div(class='row form-group')
                 div(class='col-sm-5')
-                    input(type='text', name='defName', placeholder='Titlu emisiune', class='form-control', ng-model="defEmCtrl.updateEmission.defaultName")
+                    input(type='text', name='defName', placeholder='Titlu emisiune', class='form-control', ng-model="defEmCtrl.updateEmission.defaultName", required=true)
 
             div(class='row form-group')
                 div(class='col-sm-5')
-                    select(name='defType', class='form-control')
+                    select(name='defType', class='form-control', required=true)
                         option(ng-repeat="type in defEmCtrl.types", value="{{type.name}}", ng-selected="defEmCtrl.updateEmission.defaultType == type.name") {{type.name}}
 
 
             div(class='row form-group')
                 div(class='col-sm-5')
-                    input(type='text', name='defLength', placeholder='Durata totala', class='form-control', ng-model="defEmCtrl.updateEmission.defaultLength")
+                    input(type='text', name='defLength', placeholder='Durata totala (minute)', class='form-control', ng-model="defEmCtrl.updateEmission.defaultLength", required=true)
 
             div(class='row form-group')
                 div(class='col-sm-6')
